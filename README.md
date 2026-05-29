@@ -1,93 +1,72 @@
-Projeto SentinelEye - API de Gestao Operacional
+SentinelEye API - Advanced Business Development with .NET
 
 Integrantes do Grupo
+Nome: Eduardo Augusto de Oliveira Souza | RM: 565269 | Turma: 2TDSPI
+Nome: Fellipe Costa de Oliveira | RM: 564673 | Turma: 2TDSPI
+Nome: Felype Ferreira Maschio | RM: 563009 | Turma: 2TDSPI
+Nome: Gustavo Vieira de Matos | RM: 563304 | Turma: 2TDSPI
+Nome: Pedro Henrique dos Santos Costa | RM: 562156 | Turma: 2TDSPI
 
-Eduardo Augusto de Oliveira Souza - RM 565269
-Fellipe Costa de Oliveira - RM 564673
-Felype Ferreira Maschio - RM 563009
-Gustavo Vieira de Matos - RM 563304
-Pedro Henrique dos Santos Costa - RM 562156
+Link
+GitHub: https://github.com/EduardoSouza19/SentinelEyeAPI
 
-Descricao do Projeto
+Descricao da Solucao
 
-O SentinelEye e uma solucao desenvolvida para a Global Solution 2026/1, focada no monitoramento de fronteiras e oceanos por meio de visao computacional orbital. Esta API REST, desenvolvida em .NET 8, atua como o nucleo de gestao operacional do sistema, permitindo o registro de ocorrencias, controle de alertas e gerenciamento de agentes em campo. A solucao visa combater atividades ilicitas como pesca ilegal e trafico humano atraves da integracao de dados de satelite e inteligencia artificial.
+O SentinelEye e uma solucao de monitoramento orbital focada no combate a atividades ilicitas como pesca ilegal e trafico humano. A API REST desenvolvida em .NET 8 atua como o nucleo operacional, gerenciando ocorrencias, alertas, agentes e regioes monitoradas via satelite. O sistema integra dados espaciais com inteligencia de campo para fornecer respostas rapidas a incidentes detectados.
+Arquitetura Macro da Solucao
+A arquitetura segue o padrao de camadas para garantir a escalabilidade e manutencao do sistema:
+Camada de Apresentacao (Controllers): Responsavel por expor os endpoints REST e gerenciar as requisicoes HTTP.
+Camada de Servicos (Services): Onde reside a logica de negocio e as regras de validacao da aplicacao.
+Camada de Dados (Repositories): Implementacao do padrao Repository para isolar o acesso ao banco de dados Oracle.
+Camada de Dominio (Models e DTOs): Estruturas que definem as entidades do banco e os objetos de transferencia de dados.
+O sistema utiliza o Entity Framework Core como ORM para a comunicacao com o banco de dados Oracle, utilizando Migrations para o versionamento do esquema.
 
-Arquitetura do Sistema
+How-to - Executando o Projeto do Zero
 
-A API foi construida seguindo os padroes de arquitetura em camadas para garantir a separacao de responsabilidades e facilidade de manutencao:
+Pre-requisitos
+Visual Studio 2022 ou VS Code com .NET 8 SDK instalado.
+Banco de dados Oracle configurado e acessivel.
+Ferramenta para testes de API (Postman, Insomnia ou o proprio Swagger).
 
-1.
-Camada de Controllers: Responsavel por expor os endpoints da API e gerenciar as requisicoes HTTP.
+1 - Clonar o Repositorio
+Execute o comando abaixo no terminal:
+git clone https://github.com/EduardoSouza19/SentinelEyeAPI.git
+cd SentinelEyeAPI
 
-2.
-Camada de Services: Contem a logica de negocio, validacoes e regras operacionais.
+2 - Configurar a String de Conexao
+Abra o arquivo appsettings.json e localize a chave "OracleConnection". Substitua as informacoes de usuario, senha e host pelas credenciais do seu banco Oracle.
 
-3.
-Camada de Repositories: Realiza a comunicacao direta com o banco de dados utilizando o padrao Repository para isolar a persistencia.
+3 - Aplicar as Migrations
+Para criar a estrutura de tabelas no banco de dados, execute:
+dotnet ef database update
 
-4.
-Camada de Models e DTOs: Define a estrutura das entidades do banco e os objetos de transferencia de dados para garantir seguranca e performance.
+4 - Executar a Aplicacao
+Inicie o projeto com o comando:
+dotnet run
 
-5.
-Camada de Data: Configuracao do contexto do Entity Framework Core (AppDbContext) e mapeamento das entidades.
+5 - Acessar a Documentacao e Testar a API
+Com a aplicacao rodando, voce pode acessar as interfaces de teste:
+Swagger UI: http://localhost:PORTA/swagger
+Scalar Docs: http://localhost:PORTA/scalar/v1
 
-Tecnologias e Frameworks
+6 - Exemplos de Operacoes (CRUD )
+Voce pode testar o CRUD completo para as seguintes entidades:
+Agentes: Cadastro e listagem de profissionais em campo.
+Alertas: Gerenciamento de notificacoes de risco.
+Ocorrencias: Registro detalhado de incidentes detectados.
+Regioes: Mapeamento de areas monitoradas.
 
-•
-Linguagem: C#
-
-•
-Framework: .NET 8 (ASP.NET Core)
-
-•
-ORM: Entity Framework Core
-
-•
-Banco de Dados: Oracle Database
-
-•
-Documentacao: Swagger e Scalar
-
-•
-Versionamento de Banco: EF Migrations
-
-Instrucoes para Execucao e Acesso
-
-Para rodar o projeto localmente, siga os passos abaixo:
-
-1.
-Clone o repositorio do projeto.
-
-2.
-Verifique a string de conexao "OracleConnection" no arquivo appsettings.json e ajuste as credenciais do seu banco Oracle.
-
-3.
-Abra o terminal na pasta do projeto (cd SentinelEye) e execute o comando "dotnet ef database update" para criar a estrutura das tabelas.
-
-4.
-Execute o comando "dotnet run" para iniciar a aplicacao.
-
-5.
-A API estara acessivel atraves da porta configurada na sua máquina quando rodar o comando anterior.
-
-Documentação da API
-
-A documentacao completa dos endpoints pode ser acessada via:
-
-•
-Swagger UI: /swagger
-
-•
-Scalar API Reference: /scalar/v1
-
-Desenvolvimento e Testes
-
-O desenvolvimento foi pautado em boas praticas de programacao, incluindo injecao de dependencia e uso de metodos assincronos para melhor performance. Os testes das rotas foram realizados utilizando o Swagger e arquivos de requisicao .http. Foram validados os fluxos de CRUD para todas as entidades principais: Agentes, Alertas, Imagens, Ocorrencias e Regioes.
-
-A API trata entradas invalidas retornando codigos de status HTTP apropriados, como 400 Bad Request para erros de validacao e 404 Not Found para recursos nao encontrados. A integridade dos dados e garantida por meio de validacoes no Service e relacionamentos bem definidos no Entity Framework.
-
-
-
-
-Este projeto faz parte da avaliacao da disciplina Advanced Business Development with .NET da FIAP.
-
+Estrutura de Arquivos do Projeto
+SentinelEye/
+|-- Controllers/ (Endpoints da API )
+|-- Services/ (Logica de Negocio)
+|-- Repositories/ (Acesso ao Banco de Dados)
+|-- Models/ (Entidades do Sistema)
+|-- DTOs/ (Objetos de Transferencia)
+|-- Data/ (Contexto do Entity Framework)
+|-- Migrations/ (Historico de alteracoes do banco)
+|-- appsettings.json (Configuracoes e Strings de Conexao)
+|-- Program.cs (Configuracao da Inicializacao)
+|-- README.md (Este arquivo)
+﻿
+Este projeto e parte integrante da avaliacao Global Solution da FIAP.
